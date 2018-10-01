@@ -45,7 +45,8 @@ class JsonModel(QtGui.QStandardItemModel):
         key_item = QtGui.QStandardItem(key)
         key_item.setData(data_type, QtCore.Qt.UserRole)
         key_item.setFlags(
-            QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled)
+            QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled |
+            QtCore.Qt.ItemIsEditable)
         return key_item
 
     def _create_value_item(self, value):

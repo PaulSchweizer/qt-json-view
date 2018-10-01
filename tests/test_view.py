@@ -1,3 +1,7 @@
+
+import sys
+sys.path.append("C:\\PROJECTS\\qt-json-view")
+
 from Qt import QtCore, QtWidgets
 from qt_json_view.view import JsonView
 from qt_json_view.model import JsonModel
@@ -31,7 +35,11 @@ model = JsonModel()
 model.items_from_dict(data=data)
 view.setModel(model)
 
-button.clicked.connect(model.serialize)
+def serialize():
+    import json
+    print json.dumps(model.serialize(), indent=2)
+
+button.clicked.connect(serialize)
 
 widget.show()
 view.expandAll()
