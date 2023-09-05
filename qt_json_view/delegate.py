@@ -14,10 +14,9 @@ class JsonDelegate(QtWidgets.QStyledItemDelegate):
         if index.column() == 0:
             return super(JsonDelegate, self).paint(painter, option, index)
         type_ = index.data(TypeRole)
-        if isinstance(type_, DataType):
+        if type_ is not None:
             try:
-                super(JsonDelegate, self).paint(painter, option, index)
-                return type_.paint(painter, option, index)
+                return type_.paint(self, painter, option, index)
             except NotImplementedError:
                 pass
         return super(JsonDelegate, self).paint(painter, option, index)
@@ -28,7 +27,7 @@ class JsonDelegate(QtWidgets.QStyledItemDelegate):
             return super(JsonDelegate, self).createEditor(
                 parent, option, index)
         try:
-            return index.data(TypeRole).createEditor(parent, option, index)
+            return index.data(TypeRole).createEditor(self, parent, option, index)
         except NotImplementedError:
             return super(JsonDelegate, self).createEditor(
                 parent, option, index)
@@ -38,6 +37,6 @@ class JsonDelegate(QtWidgets.QStyledItemDelegate):
         if index.column() == 0:
             return super(JsonDelegate, self).setModelData(editor, model, index)
         try:
-            return index.data(TypeRole).setModelData(editor, model, index)
+            return index.data(TypeRole).setModelData(self, editor, model, index)
         except NotImplementedError:
             return super(JsonDelegate, self).setModelData(editor, model, index)
