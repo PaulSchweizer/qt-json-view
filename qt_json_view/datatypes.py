@@ -3,6 +3,7 @@ import re
 import webbrowser
 
 from Qt import QtCore, QtGui, QtWidgets
+import six
 
 
 TypeRole = QtCore.Qt.UserRole + 1
@@ -106,10 +107,10 @@ class NoneType(DataType):
 
 
 class StrType(DataType):
-    """Strings and unicodes"""
+    """Strings"""
 
     def matches(self, data):
-        return isinstance(data, str) or isinstance(data, unicode)
+        return isinstance(data, six.string_types)
 
 
 class IntType(DataType):
@@ -347,7 +348,7 @@ class UrlType(DataType):
     REGEX = re.compile(r'(?:https?):\/\/|(?:file):\/\/')
 
     def matches(self, data):
-        if isinstance(data, str) or isinstance(data, unicode):
+        if isinstance(data, six.string_types):
             if self.REGEX.match(data) is not None:
                 return True
         return False
@@ -365,7 +366,7 @@ class FilepathType(DataType):
     REGEX = re.compile(r'(\/.*)|([A-Z]:\\.*)')
 
     def matches(self, data):
-        if isinstance(data, str) or isinstance(data, unicode):
+        if isinstance(data, six.string_types):
             if self.REGEX.match(data) is not None:
                 return True
         return False
